@@ -2,11 +2,11 @@
 #include <random>
 #include <ctime>
 
-#include "variables_and_classes.cpp"
-
 using namespace std;
 
-mt19937 gen(time(nullptr));
+#include "variables_and_classes.cpp"
+
+//mt19937 gen(time(nullptr));
 
 Particle matrix[L][L][N];
 
@@ -24,7 +24,7 @@ void set_spins(Particle matrix[L][L][N])
     }
 }
 
-double generate_me_double ()
+double generate_me_double ();
 
 int accept_configuration_of_random(double z)
 {
@@ -45,7 +45,8 @@ int main()
         {
             for (int mcs = 0; mcs < mcsteps; mcs++)
             {
-                accept_configuration_of_random();
+                double z = 0.0;
+                accept_configuration_of_random(0.0);
                 for (int i = 0; i < L*L; i++)
                 {
 
