@@ -5,10 +5,13 @@
 ///#define T_krit
 
 int amount_of_configurations = 1;
-int mcsteps = 10000;
-double T_dispersion = 5.0;
+int mcsteps = 1/*10000*/;
+double T_start = 0.5;
+double T_dispersion = 0.1/*5.0*/;
 
-//mt19937 gen(time(nullptr));
+double J = 1.0;
+
+mt19937 mt_generator(time(nullptr));
 
 struct Particle
 {

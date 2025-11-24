@@ -10,6 +10,34 @@ using namespace std;
 
 Particle matrix[L][L][N];
 
+void set_spins(Particle matrix[L][L][N]);
+bool accept_new_configuration(double z);
+
+double compute_magnetisation (Particle matrix[L][L][N]);
+double compute_magnetic_susceptibility (double M, double T);
+double compute_heat_capacity (double E, double T);
+
+int main()
+{
+    for (int configuration = 0; configuration < amount_of_configurations; configuration++)
+    {
+        set_spins (matrix);
+        for (double T_steps = T_start; T_steps < T_start+T_dispersion; T_steps+=0.1)
+        {
+            for (int mcs = 0; mcs < mcsteps; mcs++)
+            {
+                double z = 0.0;
+                accept_new_configuration(z);
+                for (int i = 0; i < L*L*N; i++)
+                {
+                    cout << i+1 << ": " <<matrix[0][0][i].spin << endl;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
 void set_spins(Particle matrix[L][L][N])
 {
     for (int i = 0; i < L; i++)
@@ -24,35 +52,38 @@ void set_spins(Particle matrix[L][L][N])
     }
 }
 
-double generate_me_double ();
-
-int accept_configuration_of_random(double z)
+bool accept_new_configuration(double z)
 {
-    ///uniform_real_distribution<double> dist_double(0.0, 1.0); ///Устанвливает распределение и диапазон
+    uniform_real_distribution<double> real_distribution(0.0, 1.0); ///Устанвливает распределение и диапазон
 
-    double accept_number = (double)gen()/gen.max();
+    double accept_number = (double)real_distribution(mt_generator);
 
-    cout << "Generared value of chetotam: " << accept_number << endl;
-    return 0;
+    if (accept_number > z) return false;
+    else return true;
 }
 
-int main()
+double compute_magnetisation (Particle matrix[L][L][N])
 {
-    for (int configuration = 0; configuration < amount_of_configurations; configuration++)
+    double M = 0.0;
+    for (int i = 0; i < L*L*N; i++)
     {
-        set_spins (matrix);
-        for (double T_steps = 0.5; T_steps < T_dispersion; T_steps+=0.1)
-        {
-            for (int mcs = 0; mcs < mcsteps; mcs++)
-            {
-                double z = 0.0;
-                accept_configuration_of_random(0.0);
-                for (int i = 0; i < L*L; i++)
-                {
-
-                }
-            }
-        }
+        M += matrix[0][0][i].spin;
     }
-    return 0;
+
+    return M;
+}
+
+double compute_magnetic_susceptibility (double M, double T) ///not done
+{
+    double k;
+    double HI = 0.0;
+
+    return HI;
+}
+
+double compute_heat_capacity (double E, double T) ///not done
+{
+    double C = 0.0;
+
+    return C;
 }
