@@ -1,14 +1,16 @@
-#define L 24
+#define L 8
 #define N 1
 #define PI 3.14159265
 #define EXP 2.71828183
-#define K_BOLZ 1.380649///E-23
+#define K_BOLZ 1.0///1.380649///E-23
 ///#define T_krit
 
-int amount_of_configurations = 1;
-int mcsteps = 100;
-double T_start = 0.5;
-double T_dispersion = 5.0;
+int amount_of_configurations = 1/*50*/;
+int mcsteps = 1000;
+///int mcs_averaging = 1000;
+double T_start = 0.05;
+double T_dispersion = 4.0/*3.0*/;
+double T_step = 0.05;
 
 double J = 1.0;
 
@@ -22,3 +24,7 @@ struct Particle
 
     int spin;
 };
+
+///For L = 8 is enough 1000 mcs
+///For L = 16 is pretty enough about pure 5000 monte carlo steps
+///For L = 32 needed not less than 10000 for highest temperatures
